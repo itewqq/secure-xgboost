@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  sx:
+    image: mc2project/ubuntu-oe0.9:v1
+    devices:
+      - /dev/sgx/enclave
+      - /dev/sgx/provision
+      - /dev/sgx_enclave
+      - /dev/sgx_provision
+    volumes:
+      - /run/aesmd/aesm.socket:/run/aesmd/aesm.socket
+      - ./:/root/secure-xgboost
+    stdin_open: true
+    tty: true
+    # privileged: true # DO NOT USE THIS IN PRODUCTION!
+    environment:
+      - http_proxy
+      - https_proxy
+
+volumes:
+  aesmd-socket:
+    external: true
